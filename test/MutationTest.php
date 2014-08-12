@@ -35,9 +35,13 @@ class MutationTest extends \PHPUnit_Framework_TestCase
             ['test'],
             ['last'],
             ['before'],
-            ['something'],
             [true],
-            [false]
+            [false],
+            [0],
+            [-1],
+            [1],
+            [1000],
+            [-1000]
         ];
     }
 }
