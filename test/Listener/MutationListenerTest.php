@@ -7,8 +7,7 @@ use Hostnet\Component\EntityMutation\Mutation;
 use Hostnet\Component\EntityTracker\Event\EntityChangedEvent;
 
 /**
- * @coversDefaultClass Hostnet\Component\EntityMutation\Listener\MutationListener
- * @covers ::__construct
+ * @covers Hostnet\Component\EntityMutation\Listener\MutationListener
  */
 class MutationListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,9 +25,6 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 
-    /**
-     * @covers ::onEntityChanged
-     */
     public function testOnEntityChanged()
     {
         $current_entity  = new MockMutationEntity();
@@ -93,14 +89,11 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($uow);
 
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
-        $this->listener->onEntityChanged($event);
+        $this->listener->entityChanged($event);
 
         $this->assertTrue(current($current_entity->getMutations()) instanceof MockMutationEntityMutation);
     }
 
-    /**
-     * @covers ::onEntityChanged
-     */
     public function testOnEntityChangedCopyCurrent()
     {
         $current_entity  = new MockMutationEntity();
@@ -150,13 +143,12 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf(get_class($current_entity) . 'Mutation'));
 
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
-        $this->listener->onEntityChanged($event);
+        $this->listener->entityChanged($event);
 
         $this->assertTrue(current($current_entity->getMutations()) instanceof MockMutationEntityMutation);
     }
 
     /**
-     * @covers ::onEntityChanged
      * @expectedException RuntimeException
      */
     public function testOnEntityChangedUnknownStrategy()
@@ -188,12 +180,9 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($annotation);
 
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
-        $this->listener->onEntityChanged($event);
+        $this->listener->entityChanged($event);
     }
 
-    /**
-     * @covers ::onEntityChanged
-     */
     public function testOnEntityChangedInsertedWithPreviousStrategy()
     {
         $current_entity  = new MockMutationEntity();
@@ -242,12 +231,9 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->method('persist');
 
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
-        $this->listener->onEntityChanged($event);
+        $this->listener->entityChanged($event);
     }
 
-    /**
-     * @covers ::onEntityChanged
-     */
     public function testOnEntityChangedEmptyChanges()
     {
         $current_entity  = new MockMutationEntity();
@@ -278,14 +264,11 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf(get_class($current_entity) . 'Mutation'));
 
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
-        $this->listener->onEntityChanged($event);
+        $this->listener->entityChanged($event);
 
         $this->assertEquals(0, count($current_entity->getMutations()));
     }
 
-    /**
-     * @covers ::onEntityChanged
-     */
     public function testOnEntityChangedNoAnnotation()
     {
         $current_entity  = new MockMutationEntity();
@@ -307,7 +290,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf(get_class($current_entity) . 'Mutation'));
 
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
-        $this->listener->onEntityChanged($event);
+        $this->listener->entityChanged($event);
 
         $this->assertEquals(0, count($current_entity->getMutations()));
     }
