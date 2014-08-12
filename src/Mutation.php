@@ -33,7 +33,7 @@ class Mutation extends Tracked
      */
     public function getStrategy()
     {
-        if (!in_array($this->strategy, [self::STRATEGY_COPY_PREVIOUS, self::STRATEGY_COPY_CURRENT])) {
+        if (!in_array($this->strategy, [self::STRATEGY_COPY_PREVIOUS, self::STRATEGY_COPY_CURRENT], true)) {
             throw new \RuntimeException(
                 sprintf("Unknown strategy '%s' for class %s.", $this->strategy, get_class($this))
             );

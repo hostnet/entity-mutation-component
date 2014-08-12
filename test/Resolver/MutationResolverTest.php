@@ -5,8 +5,7 @@ use Hostnet\Component\EntityMutation\Mutation;
 use Hostnet\Component\EntityMutation\Resolver\MutationResolver;
 
 /**
- * @coversDefaultClass Hostnet\Component\EntityMutation\Resolver\MutationResolver
- * @covers ::__construct
+ * @covers Hostnet\Component\EntityMutation\Resolver\MutationResolver
  * @author Yannick de Lange <ydelange@hostnet.nl>
  */
 class MutationResolverTest extends \PHPUnit_Framework_TestCase
@@ -30,9 +29,6 @@ class MutationResolverTest extends \PHPUnit_Framework_TestCase
         $this->resolver = new MutationResolver($this->provider);
     }
 
-    /**
-     * @covers ::getMutationAnnotation
-     */
     public function testGetMutationAnnotation()
     {
         $entity = new \stdClass();
@@ -45,9 +41,6 @@ class MutationResolverTest extends \PHPUnit_Framework_TestCase
         $this->resolver->getMutationAnnotation($this->em, $entity);
     }
 
-    /**
-     * @covers ::getMutationClassName
-     */
     public function testGetMutationClassName()
     {
         $entity            = new \stdClass();
@@ -65,9 +58,6 @@ class MutationResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Phpunit", $this->resolver->getMutationClassName($this->em, $entity));
     }
 
-    /**
-     * @covers ::getMutatableFields
-     */
     public function testGetMutatedFields()
     {
         $entity        = new \stdClass();

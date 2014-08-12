@@ -27,7 +27,7 @@ class MutationListener
     /**
      * @param EntityChangedEvent $event
      */
-    public function onEntityChanged(EntityChangedEvent $event)
+    public function entityChanged(EntityChangedEvent $event)
     {
         $em     = $event->getEntityManager();
         $entity = $event->getCurrentEntity();
