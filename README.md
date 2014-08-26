@@ -167,7 +167,11 @@ class MyUserEntity implements MutationAwareInterface
 #### Creating the Mutation for the Entity
 The mutation is an entity itself. In the current version, the MutationResolver will only return the mutated fields if they are shared between the Entity and the EntityMutation. This is easily done by adding a trait that contains the shared fields. In this example, the only property that will be used to store a mutation, is `$name`.
 
-> Note: The constructor is one of the few actual conventions you have to follow. The first parameter is the current & managed entity, where the original data is the previous state (as doctrine hydrated it the last time you retrieved it)
+The constructor is one of the few actual conventions you have to follow in order to use the mutations. The first parameter is the current & managed entity, where the original data is the previous state (as doctrine hydrated it the last time you retrieved it) and is unmanaged by doctrine.
+ 
+This is done so you have full control over the what fields and how you want to store mutations. For instance, in some cases you might want to summarize or convert certain fields which would not be possible if this were done automatically without a complex system of data transformers.
+
+> Note: The $original_data is an unmanaged entity and should only be used for reading properties. Use the first parameter for joins.
 
 ```php
 
