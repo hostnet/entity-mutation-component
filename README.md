@@ -54,7 +54,7 @@ It might look a bit complicated to set up, but it's pretty much setting up the t
 
 ```php
 
-use Hostnet\Component\EntityMutation\Resolver\BlamableMutation;
+use Hostnet\Component\EntityMutation\Resolver\MutationResolver;
 use Hostnet\Component\EntityTracker\Listener\EntityChangedListener;
 use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
 use Hostnet\Component\EntityTracker\Provider\EntityMutationMetadataProvider;
