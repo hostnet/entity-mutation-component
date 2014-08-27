@@ -1,16 +1,27 @@
 README
 ======
 
+ - [What is the Mutation Component?](#what-is-the-entity-mutation-component)
+ - [Requirements](#requirements)
+ - [Installation](#installation)
+
+### Documentation
+   - [How does it work?](#how-does-it-work)
+   - [Setup](#setup)
+     - [Registering the Events](#registering-the-events)
+     - [Configuring the Entity](#configuring-the-entity)
+     - [Creating the Mutation Entity](#creating-the-mutation-entity)
+     - [What's Next?](#whats-next)
 
 What is the Entity Mutation Component?
 --------------------------------------
 The Entity Mutation Component is a library that utilizes the [Entity Tracker Component](https://github.com/hostnet/entity-tracker-component/) and lets you hook in to the entityChanged event.
 
-This component lets you automatically store mutations based on two different strategies: copy current and copy previous. The first copies the current state into the mutation entity and the latter will copy the previous state into the mutation.
+This component lets you automatically store mutations based on two different strategies: copy current and copy previous. The first copies the current state into the mutation Entity and the latter will copy the previous state into the mutation Entity.
 
 Requirements
 ------------
-The blamable component requires a minimal php version of 5.4 and runs on Doctrine2. For specific requirements, please check [composer.json](../master/composer.json).
+The Entity Mutation Component requires a minimum of php 5.4 and runs on Doctrine2. For specific requirements, please check [composer.json](../master/composer.json).
 
 Installation
 ------------
@@ -34,16 +45,15 @@ Documentation
 How does it work?
 -----------------
 
-It works by putting the `@Mutation` annotation on your entity and registering the listener on the entityChanged event, assuming you have already configured the [Entity Tracker Component](https://github.com/hostnet/entity-tracker-component/#setup).
+It works by putting the `@Mutation` annotation on your Entity and registering the listener on the entityChanged event, assuming you have already configured the [Entity Tracker Component](https://github.com/hostnet/entity-tracker-component/#setup).
 
 For a usage example, follow the setup below.
 
 Setup
 -----
-
- - You have to add `@Mutation` to your entity
- - Optionally you can add the MutationAwareInterface if your entity knows about its own mutations
- - You have to create your Mutation entity
+ - You have to add `@Mutation` to your Entity
+ - You have to create your Mutation Entity
+ - Optionally you can add the `MutationAwareInterface` if your Entity knows about its own mutations
 
 
 #### Registering the events
@@ -51,6 +61,8 @@ Setup
 Here's an example of a very basic setup. Setting this up will be a lot easier if you use a framework that has a Dependency Injection Container.
 
 It might look a bit complicated to set up, but it's pretty much setting up the tracker component for the most part. If you use it in a framework, it's recommended to create a framework specific configuration package for this to automate this away.
+
+> Note: If you use Symfony2, you can take a look at the [hostnet/entity-tracker-bundle](https://github.com/hostnet/entity-tracker-bundle). This bundle is designed to configure the services for you.
 
 ```php
 
@@ -69,7 +81,7 @@ $annotation_reader = new AnnotationReader();
 $mutation_metadata_provider   = new EntityMutationMetadataProvider($annotation_reader);
 $annotation_metadata_provider = new EntityAnnotationMetadataProvider($annotation_reader);
 
-// pre flush event listener that uses the @Tracked/@Blamable annotation
+// pre flush event listener that uses the @Mutation annotation
 $entity_changed_listener = new EntityChangedListener(
     $mutation_metadata_provider,
     $annotation_metadata_provider
@@ -90,9 +102,9 @@ $event_manager->addEventListener('entityChanged', $mutation_listener);
 ```
 
 #### Configuring the Entity
-All we have to do now is put the @Mutation annotation on our Entity. The annotation has 2 options:
+All we have to do now is put the `@Mutation` annotation on our Entity. The annotation has 2 options:
  - strategy; This will determine if the current state or the previous state is stored in the Mutation
- - class; the full namespace to your mutation class. By default it's the current class name suffixed with Mutation
+ - class; the full namespace to your mutation class. By default it's the current class name suffixed with Mutation (i.e. `Acme\MyEntity` would be `Acme\MyEntityMutation` by default).
 
 Additionally you can configure your entity to be MutationAware, this is optional however.
 
@@ -164,10 +176,10 @@ class MyUserEntity implements MutationAwareInterface
 
 ```
 
-#### Creating the Mutation for the Entity
-The mutation is an entity itself. In the current version, the MutationResolver will only return the mutated fields if they are shared between the Entity and the EntityMutation. This is easily done by adding a trait that contains the shared fields. In this example, the only property that will be used to store a mutation, is `$name`.
+#### Creating the Mutation Entity
+The Mutation is an Entity itself. In the current version, the MutationResolver will only return the mutated fields if they are shared between the Entity and the EntityMutation. This is easily done by adding a trait that contains the shared fields. In this example, the only property that will be used to store a mutation, is `$name`.
 
-The constructor is one of the few actual conventions you have to follow in order to use the mutations. The first parameter is the current & managed entity, where the original data is the previous state (as doctrine hydrated it the last time you retrieved it) and is unmanaged by doctrine.
+The constructor is one of the few actual conventions you should follow in order to use the mutations. The first parameter is the current & managed entity, where the original data is the previous state (as doctrine hydrated it the last time you retrieved it) and is unmanaged by doctrine.
  
 This is done so you have full control over the what fields and how you want to store mutations. For instance, in some cases you might want to summarize or convert certain fields which would not be possible if this were done automatically without a complex system of data transformers.
 
@@ -207,7 +219,7 @@ class MyUserEntityMutation
 
 ```
 
-### What's next?
+#### What's next?
 
 ```php
 
