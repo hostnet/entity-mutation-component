@@ -120,7 +120,7 @@ use Hostnet\Component\EntityMutation\MutationAwareInterface;
  * @ORM\Entity
  * @ORM\Table(name="users")
  * @Mutation(
- *     class    = "MyUserEntityMutation"
+ *     class    = "MyUserEntityMutation",
  *     strategy = "previous"
  * )
  * The above values are equal to the defaults. They are only
@@ -212,7 +212,7 @@ class MyUserEntityMutation
         $this->user = $user;
 
         // populate the mutation with data from the previous state
-        $this->name = $orignal_data->getName();
+        $this->name = $original_data->getName();
     }
 }
 
