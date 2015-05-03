@@ -145,7 +145,7 @@ class MyUserEntity implements MutationAwareInterface
      * @ORM\OneToMany...
      * @var ArrayCollection
      */
-    private $mutation;
+    private $mutations;
 
     public function setName($name) { ... }
     public function getName() { ... }
