@@ -3,7 +3,7 @@
     "description": "Listens to an event so mutations can be made",
     "license": "MIT",
     "require": {
-        "php"                              : "5.*, >=5.4",
+        "php"                              : "7.*|5.*,>=5.4",
         "doctrine/orm"                     : "2.*",
         "hostnet/entity-tracker-component" : "1.*"
     },
