@@ -2,6 +2,7 @@
 namespace Hostnet\Component\EntityMutation\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Hostnet\Component\EntityMutation\Mutation;
 use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
 
 /**
@@ -13,7 +14,7 @@ class MutationResolver implements MutationResolverInterface
     /**
      * @var string
      */
-    private $annotation = 'Hostnet\Component\EntityMutation\Mutation';
+    private $annotation = Mutation::class;
 
     /**
      * @var EntityAnnotationMetadataProvider
@@ -21,7 +22,7 @@ class MutationResolver implements MutationResolverInterface
     private $provider;
 
     /**
-     * @param EntityMetadataProvider $provider
+     * @param EntityAnnotationMetadataProvider $provider
      */
     public function __construct(EntityAnnotationMetadataProvider $provider)
     {
@@ -29,7 +30,7 @@ class MutationResolver implements MutationResolverInterface
     }
 
     /**
-     * @see \Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface::getMutationAnnotation()
+     * {@inheritdoc}
      */
     public function getMutationAnnotation(EntityManagerInterface $em, $entity)
     {
@@ -37,19 +38,19 @@ class MutationResolver implements MutationResolverInterface
     }
 
     /**
-     * @see \Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface::getMutationClassName()
+     * {@inheritdoc}
      */
     public function getMutationClassName(EntityManagerInterface $em, $entity)
     {
         if (null === ($annotation = $this->getMutationAnnotation($em, $entity))) {
-            return;
+            return null;
         }
 
         return !empty($annotation->class) ? $annotation->class : get_class($entity) . 'Mutation';
     }
 
     /**
-     * @see \Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface::getMutatableFields()
+     * {@inheritdoc}
      */
     public function getMutatableFields(EntityManagerInterface $em, $entity)
     {
