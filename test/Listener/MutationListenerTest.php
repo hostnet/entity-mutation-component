@@ -17,7 +17,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->resolver = $this->getMock('Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface');
+        $this->resolver = $this->createMock('Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface');
         $this->listener = new MutationListener($this->resolver);
         $this->em       = $this
             ->getMockBuilder('Doctrine\ORM\EntityManagerInterface')
@@ -55,7 +55,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->em, $current_entity)
             ->willReturn(get_class($current_entity) . 'Mutation');
 
-        $mutation_meta = $this->getMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $mutation_meta = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $mutation_meta
             ->expects($this->any())
             ->method('getReflectionClass')
@@ -125,7 +125,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->em, $current_entity)
             ->willReturn(get_class($current_entity) . 'Mutation');
 
-        $mutation_meta = $this->getMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $mutation_meta = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $mutation_meta
             ->expects($this->any())
             ->method('getReflectionClass')
@@ -167,7 +167,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->em, $current_entity)
             ->willReturn(['id']);
 
-        $annotation = $this->getMock('Hostnet\Component\EntityMutation\Mutation');
+        $annotation = $this->createMock('Hostnet\Component\EntityMutation\Mutation');
         $annotation
             ->expects($this->once())
             ->method('getStrategy')
@@ -198,7 +198,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->em, $current_entity)
             ->willReturn(['id']);
 
-        $annotation = $this->getMock('Hostnet\Component\EntityMutation\Mutation');
+        $annotation = $this->createMock('Hostnet\Component\EntityMutation\Mutation');
         $annotation
             ->expects($this->once())
             ->method('getStrategy')

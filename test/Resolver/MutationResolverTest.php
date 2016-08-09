@@ -61,8 +61,8 @@ class MutationResolverTest extends \PHPUnit_Framework_TestCase
     public function testGetMutatedFields()
     {
         $entity        = new \stdClass();
-        $metadata      = $this->getMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
-        $metadata_meta = $this->getMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $metadata      = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $metadata_meta = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
 
         $this->provider
             ->expects($this->once())
