@@ -44,7 +44,7 @@ class MutationListener
 
         $strategy = $annotation->getStrategy();
 
-        if ($strategy === Mutation::STRATEGY_COPY_PREVIOUS && $em->getUnitOfWork()->isScheduledForInsert($entity)) {
+        if ($strategy === Mutation::STRATEGY_COPY_PREVIOUS && null === $event->getOriginalEntity()) {
             return;
         }
 
