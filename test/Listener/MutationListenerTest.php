@@ -72,22 +72,6 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->method('persist')
             ->with($this->isInstanceOf(get_class($current_entity) . 'Mutation'));
 
-        $uow = $this
-            ->getMockBuilder('Doctrine\ORM\UnitOfWork')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $uow
-            ->expects($this->once())
-            ->method('isScheduledForInsert')
-            ->with($current_entity)
-            ->willReturn(false);
-
-        $this->em
-            ->expects($this->once())
-            ->method('getUnitOfWork')
-            ->willReturn($uow);
-
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
         $this->listener->entityChanged($event);
 
@@ -209,22 +193,6 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
             ->method('getMutationAnnotation')
             ->with($this->em, $current_entity)
             ->willReturn($annotation);
-
-        $uow = $this
-            ->getMockBuilder('Doctrine\ORM\UnitOfWork')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $uow
-            ->expects($this->once())
-            ->method('isScheduledForInsert')
-            ->with($current_entity)
-            ->willReturn(true);
-
-        $this->em
-            ->expects($this->once())
-            ->method('getUnitOfWork')
-            ->willReturn($uow);
 
         $this->em
             ->expects($this->never())
