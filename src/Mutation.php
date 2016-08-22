@@ -23,7 +23,11 @@ class Mutation extends Tracked
      */
     const STRATEGY_COPY_CURRENT = "current";
 
-    public $class    = '';
+    public $class = '';
+
+    /**
+     * @Enum({"previous", "current"})
+     */
     public $strategy = self::STRATEGY_COPY_PREVIOUS;
 
     /**

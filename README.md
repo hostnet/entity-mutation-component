@@ -30,14 +30,9 @@ Installing is pretty easy, this package is available on [packagist](https://pack
 
 #### Example
 
-```javascript
-    "require" : {
-        "hostnet/entity-mutation-component" : "1.*"
-    }
-
 ```
-> Note: You can use dev-master if you want the latest changes, but this is not recommended for production code!
-
+$ composer require hostnet/entity-mutation-component
+```
 
 Documentation
 =============
@@ -62,7 +57,7 @@ Here's an example of a very basic setup. Setting this up will be a lot easier if
 
 It might look a bit complicated to set up, but it's pretty much setting up the tracker component for the most part. If you use it in a framework, it's recommended to create a framework specific configuration package for this to automate this away.
 
-> Note: If you use Symfony2, you can take a look at the [hostnet/entity-tracker-bundle](https://github.com/hostnet/entity-tracker-bundle). This bundle is designed to configure the services for you.
+> Note: If you use Symfony, you can take a look at the [hostnet/entity-tracker-bundle](https://github.com/hostnet/entity-tracker-bundle). This bundle is designed to configure the services for you.
 
 ```php
 
@@ -96,6 +91,7 @@ $mutation_resolver = new MutationResolver($annotation_metadata_provider);
 $mutation_listener = new MutationListener($mutation_resolver);
 
 // register the events
+$event_manager->addEventListener('prePersist', $entity_changed_listener);
 $event_manager->addEventListener('preFlush', $entity_changed_listener);
 $event_manager->addEventListener('entityChanged', $mutation_listener);
 
@@ -218,6 +214,8 @@ class MyUserEntityMutation
 
 
 ```
+
+A fully [working example](test/Functional/Entity) can be found in our tests.
 
 #### What's next?
 
