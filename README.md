@@ -73,13 +73,13 @@ $event_manager = $em->getEventManager();
 $annotation_reader = new AnnotationReader();
 
 // setup required providers
-$mutation_metadata_provider   = new EntityMutationMetadataProvider($annotation_reader);
 $annotation_metadata_provider = new EntityAnnotationMetadataProvider($annotation_reader);
+$mutation_metadata_provider   = new EntityMutationMetadataProvider($annotation_reader);
 
 // pre flush event listener that uses the @Mutation annotation
 $entity_changed_listener = new EntityChangedListener(
-    $mutation_metadata_provider,
-    $annotation_metadata_provider
+    $annotation_metadata_provider,
+    $mutation_metadata_provider
 );
 
 // the resolver is used to find the correct annotation, which
