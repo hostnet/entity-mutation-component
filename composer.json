@@ -20,6 +20,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Functional\\Entity\\": "test/Functional/Entity/",
             "Hostnet\\Component\\EntityMutation\\": "test/"
         }
     },
