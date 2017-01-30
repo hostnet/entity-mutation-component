@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2016-2017 Hostnet B.V.
+ */
 namespace Hostnet\Component\EntityMutation\Listener;
 
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntity;

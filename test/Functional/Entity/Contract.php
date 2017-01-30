@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2016-2017 Hostnet B.V.
+ */
 namespace Functional\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
