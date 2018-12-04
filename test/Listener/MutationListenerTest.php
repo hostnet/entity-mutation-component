@@ -4,15 +4,18 @@
  */
 namespace Hostnet\Component\EntityMutation\Listener;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntity;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityMutation;
 use Hostnet\Component\EntityMutation\Mutation;
+use Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface;
 use Hostnet\Component\EntityTracker\Event\EntityChangedEvent;
+use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Hostnet\Component\EntityMutation\Listener\MutationListener
+ * @covers \Hostnet\Component\EntityMutation\Listener\MutationListener
  */
-class MutationListenerTest extends \PHPUnit_Framework_TestCase
+class MutationListenerTest extends TestCase
 {
     private $resolver;
     private $listener;
@@ -20,10 +23,10 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->resolver = $this->createMock('Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface');
+        $this->resolver = $this->createMock(MutationResolverInterface::class);
         $this->listener = new MutationListener($this->resolver);
         $this->em       = $this
-            ->getMockBuilder('Doctrine\ORM\EntityManagerInterface')
+            ->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -136,7 +139,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testOnEntityChangedUnknownStrategy()
     {
@@ -237,7 +240,7 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
         $this->listener->entityChanged($event);
 
-        $this->assertEquals(0, count($current_entity->getMutations()));
+        $this->assertCount(0, $current_entity->getMutations());
     }
 
     public function testOnEntityChangedNoAnnotation()
@@ -263,6 +266,6 @@ class MutationListenerTest extends \PHPUnit_Framework_TestCase
         $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
         $this->listener->entityChanged($event);
 
-        $this->assertEquals(0, count($current_entity->getMutations()));
+        $this->assertCount(0, $current_entity->getMutations());
     }
 }

@@ -4,14 +4,17 @@
  */
 namespace Hostnet\Component\EntityMutation\Resolver;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Hostnet\Component\EntityMutation\Mutation;
 use Hostnet\Component\EntityMutation\Resolver\MutationResolver;
+use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Hostnet\Component\EntityMutation\Resolver\MutationResolver
+ * @covers \Hostnet\Component\EntityMutation\Resolver\MutationResolver
  * @author Yannick de Lange <ydelange@hostnet.nl>
  */
-class MutationResolverTest extends \PHPUnit_Framework_TestCase
+class MutationResolverTest extends TestCase
 {
     private $provider;
     private $resolver;
@@ -20,12 +23,12 @@ class MutationResolverTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->provider = $this
-            ->getMockBuilder('Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider')
+            ->getMockBuilder(EntityAnnotationMetadataProvider::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->em = $this
-            ->getMockBuilder('Doctrine\ORM\EntityManagerInterface')
+            ->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -39,7 +42,7 @@ class MutationResolverTest extends \PHPUnit_Framework_TestCase
         $this->provider
             ->expects($this->once())
             ->method('getAnnotationFromEntity')
-            ->with($this->em, $entity, 'Hostnet\Component\EntityMutation\Mutation');
+            ->with($this->em, $entity, Mutation::class);
 
         $this->resolver->getMutationAnnotation($this->em, $entity);
     }
@@ -48,7 +51,7 @@ class MutationResolverTest extends \PHPUnit_Framework_TestCase
     {
         $entity            = new \stdClass();
         $annotation        = new Mutation();
-        $annotation->class = "Phpunit";
+        $annotation->class = 'Phpunit';
 
         $this->provider
             ->expects($this->exactly(3))
