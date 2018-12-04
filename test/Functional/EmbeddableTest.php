@@ -18,11 +18,12 @@ use Hostnet\Component\EntityMutation\Resolver\MutationResolver;
 use Hostnet\Component\EntityTracker\Listener\EntityChangedListener;
 use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
 use Hostnet\Component\EntityTracker\Provider\EntityMutationMetadataProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class EmbeddableTest extends \PHPUnit_Framework_TestCase
+class EmbeddableTest extends TestCase
 {
     /**
      * @var EntityManager

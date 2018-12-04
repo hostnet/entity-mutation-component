@@ -4,11 +4,13 @@
  */
 namespace Hostnet\Component\EntityMutation;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- * @covers Hostnet\Component\EntityMutation\Mutation
+ * @covers \Hostnet\Component\EntityMutation\Mutation
  */
-class MutationTest extends \PHPUnit_Framework_TestCase
+class MutationTest extends TestCase
 {
     public function testGetStrategy()
     {
@@ -19,7 +21,7 @@ class MutationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @dataProvider getStrategyExceptionProvider
      * @param string $strategy
      */
