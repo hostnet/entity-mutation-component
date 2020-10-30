@@ -1,7 +1,9 @@
 <?php
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation\Functional;
 
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -37,7 +39,7 @@ class EmbeddableTest extends TestCase
      */
     private static $connection;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$connection  = new MysqlPersistentConnection();
         $params            = self::$connection->getConnectionParams();
@@ -72,7 +74,7 @@ class EmbeddableTest extends TestCase
     /**
      * @dataProvider embeddableProvider
      */
-    public function testEmbeddable($mutate, $clear_after_insert, $clear_after_update)
+    public function testEmbeddable($mutate, $clear_after_insert, $clear_after_update): void
     {
         $info   = new ContactInfo('De Ruijterkade 6', 'Henk de Vries', new \DateTime('april 25th 10:50 2015'));
         $client = new Client($info);
@@ -80,7 +82,7 @@ class EmbeddableTest extends TestCase
         self::$entity_manager->persist($client);
         self::$entity_manager->flush($client);
 
-        /* @var $client Client */
+        /** @var $client Client */
         if ($clear_after_insert) {
             self::$entity_manager->clear();
             $client = self::$entity_manager->find(Client::class, $client->getId());
@@ -129,7 +131,7 @@ class EmbeddableTest extends TestCase
             [true, false, false], // Only passes if the embeddable is cloned in the mutation constructor
             [true, false, true],
             [true, true, false],
-            [true, true, true]
+            [true, true, true],
         ];
     }
 }

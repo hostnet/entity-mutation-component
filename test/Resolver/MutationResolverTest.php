@@ -1,18 +1,18 @@
 <?php
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Hostnet\Component\EntityMutation\Mutation;
-use Hostnet\Component\EntityMutation\Resolver\MutationResolver;
 use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Component\EntityMutation\Resolver\MutationResolver
- * @author Yannick de Lange <ydelange@hostnet.nl>
  */
 class MutationResolverTest extends TestCase
 {
@@ -20,7 +20,7 @@ class MutationResolverTest extends TestCase
     private $resolver;
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->provider = $this
             ->getMockBuilder(EntityAnnotationMetadataProvider::class)
@@ -35,7 +35,7 @@ class MutationResolverTest extends TestCase
         $this->resolver = new MutationResolver($this->provider);
     }
 
-    public function testGetMutationAnnotation()
+    public function testGetMutationAnnotation(): void
     {
         $entity = new \stdClass();
 
@@ -47,7 +47,7 @@ class MutationResolverTest extends TestCase
         $this->resolver->getMutationAnnotation($this->em, $entity);
     }
 
-    public function testGetMutationClassName()
+    public function testGetMutationClassName(): void
     {
         $entity            = new \stdClass();
         $annotation        = new Mutation();
@@ -64,7 +64,7 @@ class MutationResolverTest extends TestCase
         $this->assertEquals("Phpunit", $this->resolver->getMutationClassName($this->em, $entity));
     }
 
-    public function testGetMutatedFields()
+    public function testGetMutatedFields(): void
     {
         $entity        = new \stdClass();
         $metadata      = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');

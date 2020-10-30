@@ -1,12 +1,11 @@
 <?php
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation\Mocked;
 
-/**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- */
 class MockMutationEntityMutation
 {
     public function __construct(MockMutationEntity $e, MockMutationEntity $original_data)

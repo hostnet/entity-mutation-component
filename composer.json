@@ -3,14 +3,14 @@
     "description":       "Listens to an event so mutations can be made",
     "license":           "MIT",
     "require": {
-        "php":                              "5.*,>=5.6||7.*",
+        "php":                              "^7.3",
         "doctrine/orm":                     "^2.5.4",
         "hostnet/entity-tracker-component": "^2.0.1"
     },
     "require-dev": {
         "hostnet/database-test-lib": "^1.1.0",
-        "hostnet/phpcs-tool":        "^4.1.4",
-        "phpunit/phpunit":           "^5.7.0||^7.4.5"
+        "hostnet/phpcs-tool":        "^8.3.17",
+        "phpunit/phpunit":           "^9.0.0"
     },
     "minimum-stability": "stable",
     "autoload": {

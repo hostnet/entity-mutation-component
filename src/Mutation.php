@@ -1,7 +1,9 @@
 <?php
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation;
 
 use Hostnet\Component\EntityTracker\Annotation\Tracked;
@@ -9,8 +11,6 @@ use Hostnet\Component\EntityTracker\Annotation\Tracked;
 /**
  * @Annotation
  * @Target({"CLASS"})
- *
- * @author Yannick de Lange <ydelange@hostnet.nl>
  */
 class Mutation extends Tracked
 {
