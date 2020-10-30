@@ -1,7 +1,9 @@
 <?php
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation\Functional;
 
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -41,7 +43,7 @@ class DiscriminatorMapTest extends TestCase
      */
     private static $connection;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$connection  = new MysqlPersistentConnection();
         $params            = self::$connection->getConnectionParams();
@@ -76,7 +78,7 @@ class DiscriminatorMapTest extends TestCase
     /**
      * @dataProvider discriminatorMapProvider
      */
-    public function testDiscriminatorMap($clear_after_update)
+    public function testDiscriminatorMap($clear_after_update): void
     {
         $hosting_contract = new HostingContract('foobar1.nl', 1, 'Hosting');
         $domain_contract  = new DomainContract('foobar2.nl', 2, 'www.foobar2.nl');
@@ -127,11 +129,11 @@ class DiscriminatorMapTest extends TestCase
         self::assertEquals(3, $mutation->getStatus());
     }
 
-    public function discriminatorMapProvider()
+    public function discriminatorMapProvider(): iterable
     {
         return [
             [true],
-            [false]
+            [false],
         ];
     }
 }

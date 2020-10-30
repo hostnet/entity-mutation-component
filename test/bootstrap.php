@@ -1,6 +1,8 @@
 <?php
+declare(strict_types=1);
+
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
 $loader = include __DIR__ . '/../vendor/autoload.php';
 

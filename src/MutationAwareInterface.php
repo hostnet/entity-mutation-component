@@ -1,12 +1,11 @@
 <?php
 /**
- * @copyright 2014-2017 Hostnet B.V.
+ * @copyright 2014-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation;
 
-/**
- * @author Yannick de Lange <ydelange@hostnet.nl>
- */
 interface MutationAwareInterface
 {
     /**

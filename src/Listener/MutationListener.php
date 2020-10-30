@@ -1,7 +1,9 @@
 <?php
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation\Listener;
 
 use Hostnet\Component\EntityMutation\Mutation;
@@ -9,9 +11,6 @@ use Hostnet\Component\EntityMutation\MutationAwareInterface;
 use Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface;
 use Hostnet\Component\EntityTracker\Event\EntityChangedEvent;
 
-/**
- * @author Yannick de Lange <ydelange@hostnet.nl>
- */
 class MutationListener
 {
     /**

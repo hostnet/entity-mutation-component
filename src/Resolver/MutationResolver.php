@@ -1,17 +1,15 @@
 <?php
 /**
- * @copyright 2016-2017 Hostnet B.V.
+ * @copyright 2016-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Hostnet\Component\EntityMutation\Mutation;
 use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
 
-/**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- * @author Yannick de Lange <ydelange@hostnet.nl>
- */
 class MutationResolver implements MutationResolverInterface
 {
     /**

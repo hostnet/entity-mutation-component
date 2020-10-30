@@ -1,13 +1,14 @@
 <?php
 /**
- * @copyright 2014-2017 Hostnet B.V.
+ * @copyright 2014-present Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\EntityMutation;
 
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
  * @covers \Hostnet\Component\EntityMutation\Mutation
  */
 class MutationTest extends TestCase
@@ -21,18 +22,18 @@ class MutationTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
      * @dataProvider getStrategyExceptionProvider
-     * @param string $strategy
+     * @param mixed $strategy
      */
-    public function testGetStrategyException($strategy)
+    public function testGetStrategyException($strategy): void
     {
         $mutation           = new Mutation();
         $mutation->strategy = $strategy;
+        $this->expectException(\RuntimeException::class);
         $mutation->getStrategy();
     }
 
-    public function getStrategyExceptionProvider()
+    public function getStrategyExceptionProvider(): iterable
     {
         return [
             [null],
@@ -46,7 +47,7 @@ class MutationTest extends TestCase
             [-1],
             [1],
             [1000],
-            [-1000]
+            [-1000],
         ];
     }
 }
