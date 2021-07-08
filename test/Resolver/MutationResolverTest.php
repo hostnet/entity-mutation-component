@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Component\EntityMutation\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 use Hostnet\Component\EntityMutation\Mutation;
 use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
 use PHPUnit\Framework\TestCase;
@@ -67,8 +68,8 @@ class MutationResolverTest extends TestCase
     public function testGetMutatedFields(): void
     {
         $entity        = new \stdClass();
-        $metadata      = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
-        $metadata_meta = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $metadata      = $this->createMock(ClassMetadata::class);
+        $metadata_meta = $this->createMock(ClassMetadata::class);
 
         $this->provider
             ->expects($this->once())

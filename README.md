@@ -21,7 +21,7 @@ This component lets you automatically store mutations based on two different str
 
 Requirements
 ------------
-The Entity Mutation Component requires a minimum of php 5.4 and runs on Doctrine2. For specific requirements, please check [composer.json](../master/composer.json).
+The Entity Mutation Component requires a minimum of php 7.3 and runs on Doctrine2. For specific requirements, please check [composer.json](../master/composer.json).
 
 Installation
 ------------
