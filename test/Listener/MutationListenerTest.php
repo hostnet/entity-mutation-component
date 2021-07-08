@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Component\EntityMutation\Listener;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntity;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityMutation;
 use Hostnet\Component\EntityMutation\Mutation;
@@ -63,7 +64,7 @@ class MutationListenerTest extends TestCase
             ->with($this->em, $current_entity)
             ->willReturn(get_class($current_entity) . 'Mutation');
 
-        $mutation_meta = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $mutation_meta = $this->createMock(ClassMetadata::class);
         $mutation_meta
             ->expects($this->any())
             ->method('getReflectionClass')
@@ -117,7 +118,7 @@ class MutationListenerTest extends TestCase
             ->with($this->em, $current_entity)
             ->willReturn(get_class($current_entity) . 'Mutation');
 
-        $mutation_meta = $this->createMock('\Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $mutation_meta = $this->createMock(ClassMetadata::class);
         $mutation_meta
             ->expects($this->any())
             ->method('getReflectionClass')
