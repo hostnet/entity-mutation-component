@@ -5,7 +5,7 @@
     "minimum-stability": "stable",
     "require": {
         "php":                              "^7.3||^8.0",
-        "doctrine/orm":                     "^2.8.0",
+        "doctrine/orm":                     "^2.7.4",
         "hostnet/entity-tracker-component": "^2.0.1"
     },
     "require-dev": {
