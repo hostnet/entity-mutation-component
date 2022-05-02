@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MutationTest extends TestCase
 {
-    public function testGetStrategy()
+    public function testGetStrategy(): void
     {
         $mutation = new Mutation();
         $this->assertEquals(Mutation::STRATEGY_COPY_PREVIOUS, $mutation->getStrategy());

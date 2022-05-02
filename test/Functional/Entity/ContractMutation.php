@@ -57,34 +57,22 @@ class ContractMutation
         $this->absorb($original);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return Contract
-     */
-    public function getContract()
+    public function getContract(): Contract
     {
         return $this->contract;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * @return int
-     */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -92,7 +80,7 @@ class ContractMutation
     /**
      * @param Contract $original
      */
-    protected function absorb(Contract $original)
+    protected function absorb(Contract $original): void
     {
         $this->identifier = $original->getIdentifier();
         $this->status     = $original->getStatus();

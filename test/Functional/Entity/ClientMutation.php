@@ -48,18 +48,12 @@ class ClientMutation
         $this->contact_info = clone $orginal->getContactInfo();
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return ContactInfo
-     */
-    public function getContactInfo()
+    public function getContactInfo(): ContactInfo
     {
         return $this->contact_info;
     }

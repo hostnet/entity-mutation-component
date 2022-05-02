@@ -32,10 +32,7 @@ class HostingContract extends Contract
         $this->service = $service;
     }
 
-    /**
-     * @return string
-     */
-    public function getService()
+    public function getService(): string
     {
         return $this->service;
     }

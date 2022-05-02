@@ -18,10 +18,7 @@ class HostingContractMutation extends ContractMutation
      */
     private $service;
 
-    /**
-     * @return string
-     */
-    public function getService()
+    public function getService(): string
     {
         return $this->service;
     }
@@ -29,7 +26,7 @@ class HostingContractMutation extends ContractMutation
     /**
      * @param Contract $original
      */
-    protected function absorb(Contract $original)
+    protected function absorb(Contract $original): void
     {
         if (!($original instanceof HostingContract)) {
             throw new \InvalidArgumentException(sprintf(

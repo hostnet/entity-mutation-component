@@ -60,9 +60,9 @@ class MutationResolverTest extends TestCase
             ->with($this->em, $entity, 'Hostnet\Component\EntityMutation\Mutation')
             ->willReturnOnConsecutiveCalls(null, new Mutation(), $annotation);
 
-        $this->assertEquals("", $this->resolver->getMutationClassName($this->em, $entity));
-        $this->assertEquals("stdClassMutation", $this->resolver->getMutationClassName($this->em, $entity));
-        $this->assertEquals("Phpunit", $this->resolver->getMutationClassName($this->em, $entity));
+        $this->assertEquals('', $this->resolver->getMutationClassName($this->em, $entity));
+        $this->assertEquals('stdClassMutation', $this->resolver->getMutationClassName($this->em, $entity));
+        $this->assertEquals('Phpunit', $this->resolver->getMutationClassName($this->em, $entity));
     }
 
     public function testGetMutatedFields(): void
@@ -84,9 +84,9 @@ class MutationResolverTest extends TestCase
         $this->em
             ->expects($this->exactly(2))
             ->method('getClassMetadata')
-            ->withConsecutive([get_class($entity)], [get_class($entity) . "Mutation"])
+            ->withConsecutive([get_class($entity)], [get_class($entity) . 'Mutation'])
             ->willReturnOnConsecutiveCalls($metadata, $metadata_meta);
 
-        $this->assertEquals(["id", "test"], $this->resolver->getMutatableFields($this->em, $entity));
+        $this->assertEquals(['id', 'test'], $this->resolver->getMutatableFields($this->em, $entity));
     }
 }

@@ -52,10 +52,7 @@ class Client implements MutationAwareInterface
         $this->mutations    = new ArrayCollection();
     }
 
-    /**
-     * @return ContactInfo
-     */
-    public function getContactInfo()
+    public function getContactInfo(): ContactInfo
     {
         return $this->contact_info;
     }
@@ -82,7 +79,7 @@ class Client implements MutationAwareInterface
     /**
      * @param ClientMutation $mutation
      */
-    public function addMutation($mutation)
+    public function addMutation($mutation): void
     {
         // $this->mutations is sorted by id descending, so we should add new
         // items at the start of the Collection. Doctrine collections don't
@@ -94,7 +91,7 @@ class Client implements MutationAwareInterface
     /**
      * @return ClientMutation[]
      */
-    public function getMutations()
+    public function getMutations(): array
     {
         $mutations = $this->mutations->toArray();
         usort($mutations, function (ClientMutation $ma, ClientMutation $mb) {
@@ -106,10 +103,7 @@ class Client implements MutationAwareInterface
         return $mutations;
     }
 
-    /**
-     * @return ClientMutation
-     */
-    public function getPreviousMutation()
+    public function getPreviousMutation(): ClientMutation
     {
         throw new \BadMethodCallException(__METHOD__ . ' is not implemented.');
     }
