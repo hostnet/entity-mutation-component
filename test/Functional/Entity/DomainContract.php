@@ -32,10 +32,7 @@ class DomainContract extends Contract
         $this->domain = $domain;
     }
 
-    /**
-     * @return string
-     */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
     }

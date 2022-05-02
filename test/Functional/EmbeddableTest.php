@@ -82,7 +82,7 @@ class EmbeddableTest extends TestCase
         self::$entity_manager->persist($client);
         self::$entity_manager->flush($client);
 
-        /** @var $client Client */
+        /** @var Client $client */
         if ($clear_after_insert) {
             self::$entity_manager->clear();
             $client = self::$entity_manager->find(Client::class, $client->getId());

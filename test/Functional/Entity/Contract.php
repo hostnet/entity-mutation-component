@@ -62,26 +62,17 @@ class Contract implements MutationAwareInterface
         $this->mutations  = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * @return int
-     */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -89,7 +80,7 @@ class Contract implements MutationAwareInterface
     /**
      * @param DomainContractMutation $mutation
      */
-    public function addMutation($mutation)
+    public function addMutation($mutation): void
     {
         // $this->mutations is sorted by id descending, so we should add new
         // items at the start of the Collection. Doctrine collections don't
@@ -101,7 +92,7 @@ class Contract implements MutationAwareInterface
     /**
      * @return ContractMutation[]
      */
-    public function getMutations()
+    public function getMutations(): array
     {
         $mutations = $this->mutations->toArray();
         usort($mutations, function (ContractMutation $ma, ContractMutation $mb) {
@@ -113,10 +104,7 @@ class Contract implements MutationAwareInterface
         return $mutations;
     }
 
-    /**
-     * @return DomainContractMutation
-     */
-    public function getPreviousMutation()
+    public function getPreviousMutation(): DomainContractMutation
     {
         throw new \BadMethodCallException(__METHOD__ . ' is not implemented.');
     }

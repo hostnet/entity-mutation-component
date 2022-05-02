@@ -46,35 +46,25 @@ class ContactInfo
         $this->created_at   = $created_at;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddressLine()
+    public function getAddressLine(): string
     {
         return $this->address_line;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->created_at;
     }
 
     /**
      * @param \DateTime $created_at
-     * @return ContactInfo
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($created_at): ContactInfo
     {
         $this->created_at = $created_at;
 
@@ -83,9 +73,8 @@ class ContactInfo
 
     /**
      * @param string $name
-     * @return ContactInfo
      */
-    public function setName($name)
+    public function setName($name): ContactInfo
     {
         $this->name = $name;
 
@@ -94,9 +83,8 @@ class ContactInfo
 
     /**
      * @param string $address_line
-     * @return ContactInfo
      */
-    public function setAddressLine($address_line)
+    public function setAddressLine($address_line): ContactInfo
     {
         $this->address_line = $address_line;
 

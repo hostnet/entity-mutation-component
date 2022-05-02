@@ -37,7 +37,7 @@ class MockMutationEntity implements MutationAwareInterface
     /**
      * @see \Hostnet\Component\EntityMutation\MutationAwareInterface::addMutation()
      */
-    public function addMutation($mutation)
+    public function addMutation($mutation): void
     {
         $this->mutations[] = $mutation;
     }

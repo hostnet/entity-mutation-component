@@ -18,10 +18,7 @@ class DomainContractMutation extends ContractMutation
      */
     private $domain;
 
-    /**
-     * @return string
-     */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
     }
@@ -29,7 +26,7 @@ class DomainContractMutation extends ContractMutation
     /**
      * @param Contract $original
      */
-    protected function absorb(Contract $original)
+    protected function absorb(Contract $original): void
     {
         if (!($original instanceof DomainContract)) {
             throw new \InvalidArgumentException(sprintf(

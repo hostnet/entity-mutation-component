@@ -10,7 +10,7 @@
     },
     "require-dev": {
         "hostnet/database-test-lib": "^2.0.2",
-        "hostnet/phpcs-tool":        "^8.3.17",
+        "hostnet/phpcs-tool":        "^9.1.0",
         "phpunit/phpunit":           "^9.5.6",
         "symfony/cache":             "^5.3"
     },
@@ -23,6 +23,12 @@
         "psr-4": {
             "Functional\\Entity\\":                "test/Functional/Entity/",
             "Hostnet\\Component\\EntityMutation\\": "test/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "hostnet/*":                                      true
         }
     }
 }
