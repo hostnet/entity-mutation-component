@@ -28,3 +28,5 @@ jobs:
             -   run: sudo /etc/init.d/mysql start
             -   name: phpunit
                 run: php vendor/bin/phpunit
+            -   name: phpcs
+                run: php vendor/bin/phpcs
