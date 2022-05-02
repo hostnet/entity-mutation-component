@@ -24,5 +24,11 @@
             "Functional\\Entity\\":                "test/Functional/Entity/",
             "Hostnet\\Component\\EntityMutation\\": "test/"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "hostnet/*":                                      true
+        }
     }
 }
