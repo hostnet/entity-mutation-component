@@ -33,7 +33,7 @@ class MutationResolver implements MutationResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function getMutationAnnotation(EntityManagerInterface $em, $entity)
+    public function getMutationAnnotation(EntityManagerInterface $em, $entity): ?Mutation
     {
         return $this->provider->getAnnotationFromEntity($em, $entity, $this->annotation);
     }
@@ -41,7 +41,7 @@ class MutationResolver implements MutationResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function getMutationClassName(EntityManagerInterface $em, $entity)
+    public function getMutationClassName(EntityManagerInterface $em, $entity): ?string
     {
         if (null === ($annotation = $this->getMutationAnnotation($em, $entity))) {
             return null;
@@ -53,7 +53,7 @@ class MutationResolver implements MutationResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function getMutatableFields(EntityManagerInterface $em, $entity)
+    public function getMutatableFields(EntityManagerInterface $em, $entity): array
     {
         $mutation_class = $this->getMutationClassName($em, $entity);
         $metadata       = $em->getClassMetadata(get_class($entity));

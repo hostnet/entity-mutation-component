@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace Hostnet\Component\EntityMutation\Listener;
 
-use Hostnet\Component\EntityMutation\Mutation;
+use Hostnet\Component\EntityMutation\Attributes\Mutation;
 use Hostnet\Component\EntityMutation\MutationAwareInterface;
 use Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface;
 use Hostnet\Component\EntityTracker\Event\EntityChangedEvent;
@@ -19,6 +19,11 @@ class MutationListener
     private $resolver;
 
     /**
+     * Caches the class names to prevent iterating over attribute and annotations again on the next entity.
+     */
+    private array $is_mutation_cache = [];
+
+    /**
      * @param MutationResolverInterface $resolver
      */
     public function __construct(MutationResolverInterface $resolver)
@@ -29,12 +34,12 @@ class MutationListener
     /**
      * @param EntityChangedEvent $event
      */
-    public function entityChanged(EntityChangedEvent $event)
+    public function entityChanged(EntityChangedEvent $event): void
     {
         $em     = $event->getEntityManager();
         $entity = $event->getCurrentEntity();
 
-        if (null === ($annotation = $this->resolver->getMutationAnnotation($em, $entity))) {
+        if (false === $strategy = $this->getMutationStrategy($em, $entity)) {
             return;
         }
 
@@ -43,8 +48,6 @@ class MutationListener
         if (empty($fields)) {
             return;
         }
-
-        $strategy = $annotation->getStrategy();
 
         if ($strategy === Mutation::STRATEGY_COPY_PREVIOUS && null === $event->getOriginalEntity()) {
             return;
@@ -71,5 +74,43 @@ class MutationListener
         if ($entity instanceof MutationAwareInterface) {
             $entity->addMutation($mutation);
         }
+    }
+
+    private function getMutationStrategy($em, $entity): false|string
+    {
+        $class = get_class($entity);
+        if (array_key_exists($class, $this->is_mutation_cache)) {
+            return $this->is_mutation_cache[$class];
+        }
+
+        if (null !== $annotation = $this->resolver->getMutationAnnotation($em, $entity)) {
+            $this->is_mutation_cache[$class] = $annotation->getStrategy();
+
+            return $this->is_mutation_cache[$class];
+        }
+
+        if (null !== $strategy = $this->getMutationAttributeStrategy($entity)) {
+            $this->is_mutation_cache[$class] = $strategy;
+
+            return $this->is_mutation_cache[$class];
+        }
+
+        $this->is_mutation_cache[$class] = false;
+
+        return false;
+    }
+
+    private function getMutationAttributeStrategy($entity): ?string
+    {
+        $reflection = new \ReflectionClass($entity);
+        $attributes = $reflection->getAttributes(Mutation::class);
+
+        if (empty($attributes)) {
+            return null;
+        }
+
+        /** @var Mutation $attribute */
+        $attribute = $attributes[0]->newInstance();
+        return $attribute->getStrategy();
     }
 }

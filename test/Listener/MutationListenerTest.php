@@ -9,6 +9,8 @@ namespace Hostnet\Component\EntityMutation\Listener;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntity;
+use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityAttribute;
+use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityAttributeMutation;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityMutation;
 use Hostnet\Component\EntityMutation\Mutation;
 use Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface;
@@ -268,5 +270,58 @@ class MutationListenerTest extends TestCase
         $this->listener->entityChanged($event);
 
         $this->assertCount(0, $current_entity->getMutations());
+    }
+
+    public function testOnEntityChangedWithAttribute(): void
+    {
+        $current_entity  = new MockMutationEntityAttribute();
+        $original_entity = new MockMutationEntityAttribute();
+
+        $current_entity->id  = 2;
+        $original_entity->id = 1;
+
+        $mutated_fields = ['id'];
+
+        $this->resolver
+            ->expects($this->exactly(2))
+            ->method('getMutatableFields')
+            ->with($this->em, $current_entity)
+            ->willReturn(['id']);
+
+        $this->resolver
+            ->expects($this->once())
+            ->method('getMutationAnnotation')
+            ->with($this->em, $current_entity)
+            ->willReturn(null);
+
+        $this->resolver
+            ->expects($this->exactly(2))
+            ->method('getMutationClassName')
+            ->with($this->em, $current_entity)
+            ->willReturn(get_class($current_entity) . 'Mutation');
+
+        $mutation_meta = $this->createMock(ClassMetadata::class);
+        $mutation_meta
+            ->expects($this->any())
+            ->method('getReflectionClass')
+            ->willReturn(new \ReflectionClass(get_class($current_entity) . 'Mutation'));
+
+        $this->em
+            ->expects($this->exactly(2))
+            ->method('getClassMetadata')
+            ->with(get_class($current_entity) . 'Mutation')
+            ->willReturn($mutation_meta);
+
+        $this->em
+            ->expects($this->exactly(2))
+            ->method('persist')
+            ->with($this->isInstanceOf(get_class($current_entity) . 'Mutation'));
+
+        $event = new EntityChangedEvent($this->em, $current_entity, $original_entity, $mutated_fields);
+        $this->listener->entityChanged($event);
+
+        $this->assertTrue(current($current_entity->getMutations()) instanceof MockMutationEntityAttributeMutation);
+
+        $this->listener->entityChanged($event); // covers getting the attribute from the cache, submits a 2nd mutation.
     }
 }

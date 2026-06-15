@@ -6,6 +6,9 @@ declare(strict_types=1);
 
 namespace Hostnet\Component\EntityMutation;
 
+/**
+ * TODO: add typehints on next BC break, removing doctrine/annotations
+ */
 interface MutationAwareInterface
 {
     /**

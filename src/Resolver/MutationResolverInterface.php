@@ -14,21 +14,20 @@ interface MutationResolverInterface
     /**
      * Return the mutation annotation
      *
-     * @return Mutation
+     *
+     * @deprecated Please use the attribute instead.
      */
-    public function getMutationAnnotation(EntityManagerInterface $em, $entity);
+    public function getMutationAnnotation(EntityManagerInterface $em, $entity): ?Mutation;
 
     /**
      * Return the mutation class name
-     *
-     * @return string
      */
-    public function getMutationClassName(EntityManagerInterface $em, $entity);
+    public function getMutationClassName(EntityManagerInterface $em, $entity): ?string;
 
     /**
      * Return list of mutatable fields
      *
      * @return string[]
      */
-    public function getMutatableFields(EntityManagerInterface $em, $entity);
+    public function getMutatableFields(EntityManagerInterface $em, $entity): array;
 }
