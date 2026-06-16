@@ -7,7 +7,8 @@ declare(strict_types=1);
 namespace Hostnet\Component\EntityMutation\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hostnet\Component\EntityMutation\Mutation;
+use Hostnet\Component\EntityMutation\Attributes\Mutation;
+use Hostnet\Component\EntityMutation\Mutation as MutationAnnotation;
 use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
 
 class MutationResolver implements MutationResolverInterface
@@ -15,7 +16,7 @@ class MutationResolver implements MutationResolverInterface
     /**
      * @var string
      */
-    private $annotation = Mutation::class;
+    private $annotation = MutationAnnotation::class;
 
     /**
      * @var EntityAnnotationMetadataProvider
@@ -33,18 +34,25 @@ class MutationResolver implements MutationResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function getMutationAnnotation(EntityManagerInterface $em, $entity): ?Mutation
+    public function getMutationAnnotation(EntityManagerInterface $em, $entity): ?MutationAnnotation
     {
         return $this->provider->getAnnotationFromEntity($em, $entity, $this->annotation);
+    }
+
+    public function getMutationAttribute(EntityManagerInterface $em, $entity): ?Mutation
+    {
+        return $this->provider->getAttributeFromEntity(Mutation::class, $em, $entity);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getMutationClassName(EntityManagerInterface $em, $entity): ?string
+    public function getMutationClassName(EntityManagerInterface $em, $entity): string
     {
-        if (null === ($annotation = $this->getMutationAnnotation($em, $entity))) {
-            return null;
+        $annotation = $this->getMutationAnnotation($em, $entity);
+        // If $annotation is null, we must be using the attribute, otherwise this code would not get hit.
+        if (null === $annotation) {
+            return get_class($entity) . 'Mutation';
         }
 
         return !empty($annotation->class) ? $annotation->class : get_class($entity) . 'Mutation';

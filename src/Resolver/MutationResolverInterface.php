@@ -7,7 +7,8 @@ declare(strict_types=1);
 namespace Hostnet\Component\EntityMutation\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hostnet\Component\EntityMutation\Mutation;
+use Hostnet\Component\EntityMutation\Attributes\Mutation;
+use Hostnet\Component\EntityMutation\Mutation as MutationAnnotation;
 
 interface MutationResolverInterface
 {
@@ -17,12 +18,14 @@ interface MutationResolverInterface
      *
      * @deprecated Please use the attribute instead.
      */
-    public function getMutationAnnotation(EntityManagerInterface $em, $entity): ?Mutation;
+    public function getMutationAnnotation(EntityManagerInterface $em, $entity): ?MutationAnnotation;
+
+    public function getMutationAttribute(EntityManagerInterface $em, $entity): ?Mutation;
 
     /**
      * Return the mutation class name
      */
-    public function getMutationClassName(EntityManagerInterface $em, $entity): ?string;
+    public function getMutationClassName(EntityManagerInterface $em, $entity): string;
 
     /**
      * Return list of mutatable fields

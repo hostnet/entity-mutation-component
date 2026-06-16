@@ -20,14 +20,17 @@ class Mutation extends Tracked
      * The Previous values will be stored in the mutation table. This is the
      * default strategy.
      */
-    public const STRATEGY_COPY_PREVIOUS = 'previous';
+    public const string STRATEGY_COPY_PREVIOUS = 'previous';
 
     /**
      * The Previous values will be stored in the mutation table. And the
      * mutation will also be added on creation of the entity.
      */
-    public const STRATEGY_COPY_CURRENT = 'current';
+    public const string STRATEGY_COPY_CURRENT = 'current';
 
+    /**
+     * @deprecated Not supported by the attribute
+     */
     public $class = '';
 
     /**

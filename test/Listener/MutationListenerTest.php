@@ -8,11 +8,12 @@ namespace Hostnet\Component\EntityMutation\Listener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Mapping\ClassMetadata;
+use Hostnet\Component\EntityMutation\Attributes\Mutation;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntity;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityAttribute;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityAttributeMutation;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityMutation;
-use Hostnet\Component\EntityMutation\Mutation;
+use Hostnet\Component\EntityMutation\Mutation as MutationAnnotation;
 use Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface;
 use Hostnet\Component\EntityTracker\Event\EntityChangedEvent;
 use PHPUnit\Framework\TestCase;
@@ -52,7 +53,7 @@ class MutationListenerTest extends TestCase
             ->with($this->em, $current_entity)
             ->willReturn(['id']);
 
-        $annotation = new Mutation();
+        $annotation = new MutationAnnotation();
 
         $this->resolver
             ->expects($this->once())
@@ -105,8 +106,8 @@ class MutationListenerTest extends TestCase
             ->with($this->em, $current_entity)
             ->willReturn(['id']);
 
-        $annotation           = new Mutation();
-        $annotation->strategy = Mutation::STRATEGY_COPY_CURRENT;
+        $annotation           = new MutationAnnotation();
+        $annotation->strategy = MutationAnnotation::STRATEGY_COPY_CURRENT;
 
         $this->resolver
             ->expects($this->once())
@@ -226,8 +227,8 @@ class MutationListenerTest extends TestCase
             ->with($this->em, $current_entity)
             ->willReturn([]);
 
-        $annotation           = new Mutation();
-        $annotation->strategy = Mutation::STRATEGY_COPY_CURRENT;
+        $annotation           = new MutationAnnotation();
+        $annotation->strategy = MutationAnnotation::STRATEGY_COPY_CURRENT;
 
         $this->resolver
             ->expects($this->once())
@@ -290,9 +291,9 @@ class MutationListenerTest extends TestCase
 
         $this->resolver
             ->expects($this->once())
-            ->method('getMutationAnnotation')
+            ->method('getMutationAttribute')
             ->with($this->em, $current_entity)
-            ->willReturn(null);
+            ->willReturn(new Mutation());
 
         $this->resolver
             ->expects($this->exactly(2))
