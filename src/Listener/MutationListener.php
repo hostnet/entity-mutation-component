@@ -6,35 +6,34 @@ declare(strict_types=1);
 
 namespace Hostnet\Component\EntityMutation\Listener;
 
-use Hostnet\Component\EntityMutation\Mutation;
+use Hostnet\Component\EntityMutation\Attributes\Mutation;
 use Hostnet\Component\EntityMutation\MutationAwareInterface;
 use Hostnet\Component\EntityMutation\Resolver\MutationResolverInterface;
 use Hostnet\Component\EntityTracker\Event\EntityChangedEvent;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class MutationListener
 {
     /**
-     * @var MutationResolverInterface
-     */
-    private $resolver;
-
-    /**
      * @param MutationResolverInterface $resolver
      */
-    public function __construct(MutationResolverInterface $resolver)
-    {
-        $this->resolver = $resolver;
+    public function __construct(
+        private MutationResolverInterface $resolver,
+        private CacheItemPoolInterface $is_mutation_cache = new ArrayAdapter()
+    ) {
     }
 
     /**
      * @param EntityChangedEvent $event
      */
-    public function entityChanged(EntityChangedEvent $event)
+    public function entityChanged(EntityChangedEvent $event): void
     {
         $em     = $event->getEntityManager();
         $entity = $event->getCurrentEntity();
 
-        if (null === ($annotation = $this->resolver->getMutationAnnotation($em, $entity))) {
+        if (false === $strategy = $this->getMutationStrategy($em, $entity)) {
             return;
         }
 
@@ -43,8 +42,6 @@ class MutationListener
         if (empty($fields)) {
             return;
         }
-
-        $strategy = $annotation->getStrategy();
 
         if ($strategy === Mutation::STRATEGY_COPY_PREVIOUS && null === $event->getOriginalEntity()) {
             return;
@@ -71,5 +68,33 @@ class MutationListener
         if ($entity instanceof MutationAwareInterface) {
             $entity->addMutation($mutation);
         }
+    }
+
+    private function getMutationStrategy($em, $entity): false|string
+    {
+        $cache_key   = base64_encode('MUTATION-' . get_class($entity));
+        $cached_item = $this->is_mutation_cache->getItem($cache_key);
+
+        if ($cached_item->isHit()) {
+            return $cached_item->get();
+        }
+
+        if (null !== $attribute = $this->resolver->getMutationAttribute($em, $entity)) {
+            return $this->save($cached_item, $attribute->getStrategy());
+        }
+
+        if (null !== $annotation = $this->resolver->getMutationAnnotation($em, $entity)) {
+            return $this->save($cached_item, $annotation->getStrategy());
+        }
+
+        return $this->save($cached_item, false);
+    }
+
+    private function save(CacheItemInterface $item, false|string $value): false|string
+    {
+        $item->set($value);
+        $this->is_mutation_cache->save($item);
+
+        return $value;
     }
 }
