@@ -9,7 +9,7 @@ namespace Hostnet\Component\EntityMutation\Resolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Hostnet\Component\EntityMutation\Attributes\Mutation;
 use Hostnet\Component\EntityMutation\Mutation as MutationAnnotation;
-use Hostnet\Component\EntityTracker\Provider\EntityAnnotationMetadataProvider;
+use Hostnet\Component\EntityTracker\Provider\EntityMetadataProvider;
 
 class MutationResolver implements MutationResolverInterface
 {
@@ -18,17 +18,8 @@ class MutationResolver implements MutationResolverInterface
      */
     private $annotation = MutationAnnotation::class;
 
-    /**
-     * @var EntityAnnotationMetadataProvider
-     */
-    private $provider;
-
-    /**
-     * @param EntityAnnotationMetadataProvider $provider
-     */
-    public function __construct(EntityAnnotationMetadataProvider $provider)
+    public function __construct(private EntityMetadataProvider $provider)
     {
-        $this->provider = $provider;
     }
 
     /**

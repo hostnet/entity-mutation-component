@@ -6,13 +6,13 @@
     "require": {
         "php":                              "^8.3",
         "doctrine/orm":                     "^2.7.4",
-        "hostnet/entity-tracker-component": "^2.0.1"
+        "hostnet/entity-tracker-component": "^2.3.0"
     },
     "require-dev": {
         "hostnet/database-test-lib": "^2.0.2",
         "hostnet/phpcs-tool":        "^9.1.0",
         "phpunit/phpunit":           "^9.5.6",
-        "symfony/cache":             "^5.3"
+        "symfony/cache":             "^6.4|^7.4"
     },
     "autoload": {
         "psr-4": {
