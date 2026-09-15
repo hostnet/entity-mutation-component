@@ -11,9 +11,9 @@ interface MutationAwareInterface
     public function addMutation(object $mutation): void;
 
     /**
-     * @return object[]
+     * @return iterable<object>
      */
-    public function getMutations(): array;
+    public function getMutations(): iterable;
 
     public function getPreviousMutation(): ?object;
 }

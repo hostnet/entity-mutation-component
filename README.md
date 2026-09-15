@@ -138,9 +138,9 @@ class MyUserEntity implements MutationAwareInterface
     }
 
     #[\Override]
-    public function getMutations(): array
+    public function getMutations(): iterable
     {
-        return $this->mutations->toArray();
+        return $this->mutations;
     }
 
     /**
