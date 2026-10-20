@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Component\EntityMutation\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Hostnet\Component\EntityMutation\Attributes\Mutation;
 use Hostnet\Component\EntityTracker\Provider\EntityMetadataProvider;
 use PHPUnit\Framework\MockObject\MockObject;

@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Component\EntityMutation\Listener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Hostnet\Component\EntityMutation\Attributes\Mutation;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntity;
 use Hostnet\Component\EntityMutation\Mocked\MockMutationEntityAttribute;
