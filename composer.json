@@ -5,10 +5,11 @@
     "minimum-stability": "stable",
     "require": {
         "php":                              "^8.3",
-        "doctrine/orm":                     "^2.7.4",
-        "hostnet/entity-tracker-component": "^3.0.0"
+        "doctrine/orm":                     "^2.7.4||^3.0",
+        "hostnet/entity-tracker-component": "^3.1.0"
     },
     "require-dev": {
+        "doctrine/dbal":             "^3.6||^4.0",
         "hostnet/database-test-lib": "^2.0.2",
         "hostnet/phpcs-tool":        "^9.1.0",
         "phpunit/phpunit":           "^9.5.6",

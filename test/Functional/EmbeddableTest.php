@@ -7,9 +7,11 @@ declare(strict_types=1);
 namespace Hostnet\Component\EntityMutation\Functional;
 
 use Doctrine\Common\EventManager;
+use Doctrine\DBAL\Configuration as DbalConfiguration;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Schema\DefaultSchemaManagerFactory;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
 use Hostnet\Component\DatabaseTest\MysqlPersistentConnection;
@@ -45,12 +47,11 @@ class EmbeddableTest extends TestCase
         $params           = self::$connection->getConnectionParams();
         $event_manager    = new EventManager();
 
-        $configuration = ORMSetup::createAttributeMetadataConfiguration(
-            paths: [__DIR__ . '/Entity'],
-            isDevMode: true,
-            reportFieldsWhereDeclared: true,
-        );
-        $configuration->setSchemaManagerFactory(new DefaultSchemaManagerFactory());
+        $configuration = ORMSetup::createConfiguration(true);
+        $configuration->setMetadataDriverImpl(new AttributeDriver([__DIR__ . '/Entity'], true));
+
+        $dbal_configuration = new DbalConfiguration();
+        $dbal_configuration->setSchemaManagerFactory(new DefaultSchemaManagerFactory());
 
         $entity_metadata_provider   = new EntityMetadataProvider();
         $mutation_metadata_provider = new EntityMutationMetadataProvider();
@@ -66,7 +67,7 @@ class EmbeddableTest extends TestCase
         $event_manager->addEventListener('preFlush', $entity_changed_listener);
         $event_manager->addEventListener('entityChanged', $mutation_listener);
 
-        $dbal_connection = DriverManager::getConnection($params, $configuration, $event_manager);
+        $dbal_connection = DriverManager::getConnection($params, $dbal_configuration, $event_manager);
 
         self::$entity_manager = new EntityManager($dbal_connection, $configuration, $event_manager);
 
